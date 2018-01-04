@@ -2,10 +2,11 @@
 
 
 [[projects]]
+  branch = "cm-describe-configs"
   name = "github.com/Shopify/sarama"
   packages = ["."]
-  revision = "3b1b38866a79f06deddf0487d5c27ba0697ccd65"
-  version = "v1.15.0"
+  revision = "0bbd549d97945a27b4eaded7e59aae64802e31a2"
+  source = "github.com/Mongey/sarama"
 
 [[projects]]
   name = "github.com/agext/levenshtein"
@@ -471,6 +472,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f1e14763e2ee6ea75fa9a37d72a0953c2f76324c82b9bc8d0bf3cd4d6c6ad1f6"
+  inputs-digest = "b6552a3c83989fe1859d0d19ed99d92e299768f79269d7f5157b0db27996e17b"
   solver-name = "gps-cdcl"
   solver-version = 1
