@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "mHpqll5cDkXpjMpi70J8OfXIsNM=",
+			"path": "github.com/Shopify/sarama",
+			"revision": "0bbd549d97945a27b4eaded7e59aae64802e31a2",
+			"revisionTime": "2018-01-03T23:57:24Z"
+		}
+	],
+	"rootPath": "github.com/Mongey/terraform-provider-kafka"
+}
