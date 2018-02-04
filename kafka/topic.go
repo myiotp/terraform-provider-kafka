@@ -12,13 +12,13 @@ type Topic struct {
 	Name              string
 	Partitions        int32
 	ReplicationFactor int16
-	Config            map[string]*string
+	Config            map[string]string
 }
 
 func (t *Topic) Equal(other Topic) bool {
-	mape := MapEq(other.Config, t.Config)
 
-	if mape == nil && (other.Name == t.Name) && (other.Partitions == t.Partitions) && (other.ReplicationFactor == t.ReplicationFactor) {
+	err := MapEq(other.Config, t.Config)
+	if err == nil && (other.Name == t.Name) && (other.Partitions == t.Partitions) && (other.ReplicationFactor == t.ReplicationFactor) {
 		return true
 	}
 	return false
@@ -51,7 +51,7 @@ func configToResources(topic Topic) []*sarama.AlterConfigsResource {
 		{
 			Type:          sarama.TopicResource,
 			Name:          topic.Name,
-			ConfigEntries: topic.Config,
+			ConfigEntries: MapToPtrMap(topic.Config),
 		},
 	}
 }
@@ -64,11 +64,11 @@ func metaToTopic(d *schema.ResourceData, meta interface{}) Topic {
 	convertedRF := int16(replicationFactor)
 	config := d.Get("config").(map[string]interface{})
 
-	m2 := make(map[string]*string)
+	m2 := make(map[string]string)
 	for key, value := range config {
 		switch value := value.(type) {
 		case string:
-			m2[key] = &value
+			m2[key] = value
 		}
 	}
 

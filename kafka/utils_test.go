@@ -3,14 +3,12 @@ package kafka
 import "testing"
 
 func TestMapEq(t *testing.T) {
-	foo := "foo"
-	a := map[string]*string{
-		"a": &foo,
+	a := map[string]string{
+		"a": "foo",
 	}
 
-	moo := "foo"
-	b := map[string]*string{
-		"a": &moo,
+	b := map[string]string{
+		"a": "foo",
 	}
 
 	err := MapEq(a, b)

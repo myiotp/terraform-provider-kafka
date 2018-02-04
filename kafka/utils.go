@@ -5,18 +5,15 @@ import (
 )
 
 // MapEq compares two maps, and checks that the keys and values are the same
-func MapEq(result, expected map[string]*string) error {
+func MapEq(result, expected map[string]string) error {
 	if len(result) != len(expected) {
 		return fmt.Errorf("%v != %v", result, expected)
 	}
 
 	for expectedK, expectedV := range expected {
 		if resultV, ok := result[expectedK]; ok {
-			if resultV == nil && expectedV == nil {
-				continue
-			}
-			if *resultV != *expectedV {
-				return fmt.Errorf("result[%s]: %s != expected[%s]: %s", expectedK, *resultV, expectedK, *expectedV)
+			if resultV != expectedV {
+				return fmt.Errorf("result[%s]: %s != expected[%s]: %s", expectedK, resultV, expectedK, expectedV)
 			}
 
 		} else {
@@ -26,11 +23,11 @@ func MapEq(result, expected map[string]*string) error {
 	return nil
 }
 
-// TODO: can I just get rid of this?
-func strPtrMapToStrMap(c map[string]*string) map[string]string {
-	foo := map[string]string{}
-	for k, v := range c {
-		foo[k] = *v
+func MapToPtrMap(m map[string]string) map[string]*string {
+	m2 := make(map[string]*string)
+	for k, v := range m {
+		m2[k] = &v
 	}
-	return foo
+
+	return m2
 }

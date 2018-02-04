@@ -77,7 +77,7 @@ func topicRefreshFunc(client *Client, topic string, expected Topic) resource.Sta
 			return actual, "Ready", nil
 		}
 
-		return nil, fmt.Sprintf("%v != %v", strPtrMapToStrMap(actual.Config), strPtrMapToStrMap(expected.Config)), nil
+		return nil, fmt.Sprintf("%v != %v", actual.Config, expected.Config), nil
 	}
 }
 

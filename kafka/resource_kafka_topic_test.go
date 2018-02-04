@@ -56,10 +56,10 @@ func testResourceTopic_initialCheck(s *terraform.State) error {
 		return err
 	}
 
-	if v, ok := topic.Config["retention.ms"]; ok && *v != "11111" {
+	if v, ok := topic.Config["retention.ms"]; ok && v != "11111" {
 		return fmt.Errorf("retention.ms did not get set got: %v", topic.Config)
 	}
-	if v, ok := topic.Config["segment.ms"]; ok && *v != "22222" {
+	if v, ok := topic.Config["segment.ms"]; ok && v != "22222" {
 		return fmt.Errorf("segment.ms !=  %v", topic)
 	}
 
@@ -75,14 +75,14 @@ func testResourceTopic_updateCheck(s *terraform.State) error {
 		return err
 	}
 
-	if v, ok := topic.Config["segment.ms"]; ok && *v != "33333" {
+	if v, ok := topic.Config["segment.ms"]; ok && v != "33333" {
 		return fmt.Errorf("segment.ms did not get updated, got: %v", topic.Config)
 	}
-	if v, ok := topic.Config["segment.bytes"]; ok && *v != "44444" {
-		return fmt.Errorf("segment.bytes did not get updated, got: %s, expected 44444", *v)
+	if v, ok := topic.Config["segment.bytes"]; ok && v != "44444" {
+		return fmt.Errorf("segment.bytes did not get updated, got: %s, expected 44444", v)
 	}
 
-	if v, ok := topic.Config["retention.ms"]; ok || v != nil {
+	if _, ok := topic.Config["retention.ms"]; ok {
 		return fmt.Errorf("retention.ms did not get removed, got: %v", topic.Config)
 	}
 

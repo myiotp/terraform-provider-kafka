@@ -120,7 +120,7 @@ func (c *Client) CreateTopic(t Topic) error {
 			t.Name: {
 				NumPartitions:     t.Partitions,
 				ReplicationFactor: t.ReplicationFactor,
-				ConfigEntries:     t.Config,
+				ConfigEntries:     MapToPtrMap(t.Config),
 			},
 		},
 		Timeout: 1000 * time.Millisecond,
@@ -194,7 +194,7 @@ func (client *Client) ReadTopic(name string) (Topic, error) {
 					return topic, err
 				}
 
-				log.Printf("[DEBUG] Config %v from Kafka", strPtrMapToStrMap(configToSave))
+				log.Printf("[DEBUG] Config %v from Kafka", configToSave)
 				topic.Config = configToSave
 				return topic, nil
 			}
@@ -204,8 +204,8 @@ func (client *Client) ReadTopic(name string) (Topic, error) {
 	return topic, err
 }
 
-func (c *Client) topicConfig(topic string) (map[string]*string, error) {
-	conf := map[string]*string{}
+func (c *Client) topicConfig(topic string) (map[string]string, error) {
+	conf := map[string]string{}
 	request := &sarama.DescribeConfigsRequest{
 		Resources: []*sarama.ConfigResource{
 			{
@@ -230,8 +230,7 @@ func (c *Client) topicConfig(topic string) (map[string]*string, error) {
 			if tConf.Default {
 				continue
 			}
-			v := tConf.Value
-			conf[tConf.Name] = &v
+			conf[tConf.Name] = tConf.Value
 		}
 	}
 	return conf, nil
